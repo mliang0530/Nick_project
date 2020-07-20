@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        var options = {
+          sky: true,
+          atmosphere: true,
+          dragging: true,
+          tilting: true,
+          zooming: false,
+          zoom: 2};
+
+        var earth = new WE.map('earth_div' , options);
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+
+        var marker = WE.marker([40.706877, -74.011265]).addTo(earth);
+        marker.bindPopup("<b>The New York Stock Exchange</b><br>Welcome to The Big Board!<br />", {maxWidth: 150, closeButton: true}).openPopup();
+
+        var marker2 = WE.marker([35.6763, 139.7739]).addTo(earth);
+        marker2.bindPopup("<b>Tokyo Stock Exchange</b><br>Welcome to Tōshō (東証)<br />", {maxWidth: 150, closeButton: false});
+
+        var marker3 = WE.marker([31.23833, 121.50639]).addTo(earth);
+        marker3.bindPopup("<b>Shanghai Stock Exchange</b><br>Welcome to 上海證券交易所!<br />",  {maxWidth: 150, closeButton: false});
+
+        var marker4 = WE.marker([22.542039, 114.053865]).addTo(earth);
+        marker4.bindPopup("<b>Hong Kong Stock Exchange</b><br>Welcome to 香港聯合交易所!<br />",  {maxWidth: 150, closeButton: false});
+     
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(earth);
+
+         // Start a simple rotation animation
+         var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+      };
+
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0; background-color: black;}
+      #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>
+    <title>Stock Exchanges</title>
+  </head>
+  <body onload="initialize()">
+    <!-- <canvas id="glCanvas" width="640" height="480"></canvas> -->
+    <div id="earth_div"></div>
+</body>
+
+</html>
+
+
+
+
+                  <!-- <div class="container-fluid p-1" >
+                    <a href="temperature.html" class="imageFocus" onclick="this.focus()">
+                    <img class="card-img-bottom zoom" src="Resources\assets\images\Fig1.png" style='width:100%;' alt="Latitude vs Max Temp Graph">
+                    </a>
+                  </div> -->
